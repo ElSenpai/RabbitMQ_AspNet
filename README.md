@@ -2,7 +2,7 @@
 
 ### Fanout Exchange
 
-<p> test <p/>
+<p> <p/>
 
 
 ### Direct Exchange
