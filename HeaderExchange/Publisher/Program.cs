@@ -38,6 +38,7 @@ namespace RabbitMQ.publisher
 
             var properties = channel.CreateBasicProperties();
             properties.Headers = headers;
+            properties.Persistent = true; // msjlar kalıcı hale gelir
 
             channel.BasicPublish("header-exchange", string.Empty, properties,Encoding.UTF8.GetBytes("heder mesajım"));
 
