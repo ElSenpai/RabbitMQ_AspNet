@@ -26,28 +26,34 @@ namespace RabbitMQ.publisher
 
             var channel = connection.CreateModel();
 
-            //channel.QueueDeclare("hello-queue", true, false, false); 
+            
             channel.ExchangeDeclare("logs-direct", durable: true, type: ExchangeType.Direct);
 
 
             Enum.GetNames(typeof(LogNames)).ToList().ForEach(x =>
             {   //senaryoya göre bu sefer publisher da kuyruk oluşturuyoruz
+                var routeKey = $"route-{x}";
+
                 var queueName = $"direct-queue-{x}";
+
+                
                 channel.QueueDeclare(queueName, true, false, false);
 
-                channel.QueueBind(queueName, "logs-direct", null);
+                channel.QueueBind(queueName, "logs-direct",routeKey, null);
             });
 
             Enumerable.Range(1, 50).ToList().ForEach(c =>
             {
+                LogNames log = (LogNames)new Random().Next(1,5);
 
-
-                string message = $"log {c} ";
+                string message = $"log-type: {log} ";
 
                 var messagebody = Encoding.UTF8.GetBytes(message);
 
-                channel.BasicPublish("logs-direct", "", null, messagebody);
-                Console.WriteLine($"Mesaj gönderilmiştir : {message}");
+                var routeKey = $"route-{log}";
+
+                channel.BasicPublish("logs-direct", routeKey, null, messagebody);
+                Console.WriteLine($"Log gönderilmiştir : {message}");
             });
 
 
