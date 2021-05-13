@@ -2,7 +2,8 @@
 
 ### Fanout Exchange
 
-<p> <p/>
+
+![some](https://github.com/ElSenpai/RabbitMQ_AspNet/blob/master/asset/Fanout.png)
 
 
 ### Direct Exchange
