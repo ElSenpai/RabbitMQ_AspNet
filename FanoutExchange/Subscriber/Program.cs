@@ -21,18 +21,18 @@ namespace RabbitMQ.subscriber
 
             //channel.ExchangeDeclare("logs-fanout", durable: true, type: ExchangeType.Fanout);
 
-           // var randomQueueName = "log-database-save-queue";    //channel.QueueDeclare().QueueName;
+            // var randomQueueName = "log-database-save-queue";    //channel.QueueDeclare().QueueName;
             var randomQueueName = channel.QueueDeclare().QueueName;
-          
-           // channel.QueueDeclare(randomQueueName,true,false,false);// ilgili subs kapansa bile bu kuyruk durur.
 
-            channel.QueueBind(randomQueueName,"logs-fanout","",null); // o nedenle bind kullandık ki silinsin
+            // channel.QueueDeclare(randomQueueName,true,false,false);// ilgili subs kapansa bile bu kuyruk durur.
+
+            channel.QueueBind(randomQueueName, "logs-fanout", "", null); // o nedenle bind kullandık ki silinsin
 
             channel.BasicQos(0, 1, false);
 
             var consumer = new EventingBasicConsumer(channel);
 
-            channel.BasicConsume(randomQueueName,false, consumer);
+            channel.BasicConsume(randomQueueName, false, consumer);
 
             Console.WriteLine("loglar dinleniyor");
 
@@ -44,15 +44,15 @@ namespace RabbitMQ.subscriber
 
                 Thread.Sleep(1500);
 
-                Console.WriteLine("gelen mesaj:" +message);
+                Console.WriteLine("gelen mesaj:" + message);
 
-                channel.BasicAck(e.DeliveryTag,false);
+                channel.BasicAck(e.DeliveryTag, false);
             };
 
             Console.ReadLine();
 
         }
 
-       
+
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Subscriber
+namespace DirectExchange
 {
     class Program
     {

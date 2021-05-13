@@ -24,17 +24,17 @@ namespace RabbitMQ.publisher
 
             Enumerable.Range(1, 50).ToList().ForEach(c =>
             {
-                string message =  $"log {c} ";
+                string message = $"log {c} ";
 
                 var messagebody = Encoding.UTF8.GetBytes(message);
 
-                channel.BasicPublish("logs-fanout","", null, messagebody);
-                 Console.WriteLine($"Mesaj gönderilmiştir : {message}");
+                channel.BasicPublish("logs-fanout", "", null, messagebody);
+                Console.WriteLine($"Mesaj gönderilmiştir : {message}");
             });
 
-           
 
-            
+
+
             Console.ReadLine();
         }
     }
