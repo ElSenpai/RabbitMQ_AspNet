@@ -22,7 +22,7 @@ namespace WatermarkApp.Services
         {
             _connectionFactory = connectionFactory;
             _logger = logger;
-            Connect();
+            
         }
 
         public IModel Connect()
@@ -36,7 +36,7 @@ namespace WatermarkApp.Services
 
             _channel = _connection.CreateModel();
 
-            _channel.ExchangeDeclare(ExchangeName, type: "direct", true, false);
+            _channel.ExchangeDeclare(ExchangeName, type:"direct", true, false);
 
             _channel.QueueDeclare(QueueName, true, false, false, null);
 

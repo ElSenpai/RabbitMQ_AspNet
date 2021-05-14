@@ -18,6 +18,6 @@ namespace WatermarkApp.Models
         [Range(1,100)]
         public int Stock { get; set; }
         [StringLength(100)]
-        public string PicUrl { get; set; }
+        public string ImageName { get; set; }
     }
 }
