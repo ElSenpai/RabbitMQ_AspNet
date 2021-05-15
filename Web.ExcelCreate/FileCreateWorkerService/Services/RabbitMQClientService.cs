@@ -3,6 +3,7 @@ using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace FileCreateWorkerService.Services
@@ -12,8 +13,8 @@ namespace FileCreateWorkerService.Services
         private readonly ConnectionFactory _connectionFactory;
         private IConnection _connection;
         private IModel _channel;
-       
-        
+
+
         public static string QueueName = "queue-excel-file";
 
         private readonly ILogger<RabbitMQClientService> _logger;
@@ -29,6 +30,7 @@ namespace FileCreateWorkerService.Services
         {
             _connection = _connectionFactory.CreateConnection();
 
+
             if (_channel is { IsOpen: true })
             {
                 return _channel;
@@ -36,9 +38,10 @@ namespace FileCreateWorkerService.Services
 
             _channel = _connection.CreateModel();
 
-            
+
 
             _logger.LogInformation("RabbitMQ ile bağlantı kuruldu...");
+
 
             return _channel;
 
@@ -52,7 +55,8 @@ namespace FileCreateWorkerService.Services
             _connection?.Close();
             _connection?.Dispose();
 
-            _logger.LogInformation("RabbitMq ile Bağlantı koptu...");
+            _logger.LogInformation("RabbitMQ ile bağlantı koptu...");
+
         }
     }
 }

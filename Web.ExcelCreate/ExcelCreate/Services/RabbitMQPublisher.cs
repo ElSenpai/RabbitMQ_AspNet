@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client;
+﻿
+using RabbitMQ.Client;
 using Shared;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,16 @@ namespace ExcelCreate.Services
 {
     public class RabbitMQPublisher
     {
-        private readonly RabbitMqClientService _rabbitMqClientService;
+        private readonly RabbitMQClientService _rabbitMQClientService;
 
-        public RabbitMQPublisher(RabbitMqClientService rabbitMqClientService)
+        public RabbitMQPublisher(RabbitMQClientService rabbitMQClientService)
         {
-            _rabbitMqClientService = rabbitMqClientService;
+            _rabbitMQClientService = rabbitMQClientService;
         }
+
         public void Publish(CreateExcelMessage createExcelMessage)
         {
-            var channel = _rabbitMqClientService.Connect();
+            var channel = _rabbitMQClientService.Connect();
 
             var bodyString = JsonSerializer.Serialize(createExcelMessage);
 
@@ -28,8 +30,8 @@ namespace ExcelCreate.Services
             var properties = channel.CreateBasicProperties();
             properties.Persistent = true;
 
-            channel.BasicPublish(RabbitMqClientService.ExchangeName, RabbitMqClientService.RoutingExcel, basicProperties: properties, body: bodyByte);
-        }
+            channel.BasicPublish(exchange: RabbitMQClientService.ExchangeName, routingKey: RabbitMQClientService.RoutingExcel, basicProperties: properties, body: bodyByte);
 
+        }
     }
 }

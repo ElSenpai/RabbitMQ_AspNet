@@ -49,7 +49,7 @@ namespace ExcelCreate.Controllers
 
             await _context.SaveChangesAsync();
 
-            _rabbitMQPublisher.Publish(new CreateExcelMessage() { FileId = userfile.Id, UserId = user.Id });
+            _rabbitMQPublisher.Publish(new CreateExcelMessage() { FileId = userfile.Id  });
 
             TempData["StartCreatingExcel"] = true;
 

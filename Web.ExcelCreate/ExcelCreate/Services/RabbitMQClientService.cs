@@ -13,7 +13,7 @@ namespace ExcelCreate.Services
         private IConnection _connection;
         private IModel _channel;
         public static string ExchangeName = "ExcelDirectExchange";
-        public static string RoutingExcel = "excel-route";
+        public static string RoutingExcel = "excel-route-file";
         public static string QueueName = "queue-excel-file";
 
         private readonly ILogger<RabbitMQClientService> _logger;
@@ -29,6 +29,7 @@ namespace ExcelCreate.Services
         {
             _connection = _connectionFactory.CreateConnection();
 
+
             if (_channel is { IsOpen: true })
             {
                 return _channel;
@@ -40,9 +41,11 @@ namespace ExcelCreate.Services
 
             _channel.QueueDeclare(QueueName, true, false, false, null);
 
+
             _channel.QueueBind(exchange: ExchangeName, queue: QueueName, routingKey: RoutingExcel);
 
             _logger.LogInformation("RabbitMQ ile bağlantı kuruldu...");
+
 
             return _channel;
 
@@ -56,7 +59,8 @@ namespace ExcelCreate.Services
             _connection?.Close();
             _connection?.Dispose();
 
-            _logger.LogInformation("RabbitMq ile Bağlantı koptu...");
+            _logger.LogInformation("RabbitMQ ile bağlantı koptu...");
+
         }
     }
 }
