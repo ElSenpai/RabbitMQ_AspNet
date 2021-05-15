@@ -19,6 +19,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace FileCreateWorkerService
 {
     public class Worker : BackgroundService
@@ -77,17 +78,18 @@ namespace FileCreateWorkerService
             wb.Worksheets.Add(ds);
             wb.SaveAs(ms);
 
-            MultipartFormDataContent multipartFormDataContent = new();
+            MultipartFormDataContent multipartFormDataContent = new ();
 
-            multipartFormDataContent.Add(new ByteArrayContent(ms.ToArray()), "file", Guid.NewGuid().ToString() + ".xlsx");
+            multipartFormDataContent.Add(new ByteArrayContent(ms.ToArray()),"file", Guid.NewGuid().ToString() + ".xlsx");
 
-            var baseUrl = "https://localhost:44369/api/files/file";
-
+            var baseUrl = "https://localhost:44369/api/denemes";
+            
            
 
             using (var httpClient = new HttpClient())
             {
 
+                Console.WriteLine(multipartFormDataContent);
                 var response = await httpClient.PostAsync($"{baseUrl}?fileId={createExcelMessage.FileId}", multipartFormDataContent);
 
                 if (response.IsSuccessStatusCode)
@@ -115,12 +117,12 @@ namespace FileCreateWorkerService
 
             table.Columns.Add("ProductId", typeof(int));
             table.Columns.Add("ProductName", typeof(string));
-            table.Columns.Add("CategoryId", typeof(int));
-            table.Columns.Add("UnitPrice", typeof(decimal));
+           
+            
 
             products.ForEach(x =>
             {
-                table.Rows.Add(x.ProductId, x.ProductName, x.CategoryId, x.UnitPrice);
+                table.Rows.Add(x.ProductId, x.ProductName);
 
             });
 

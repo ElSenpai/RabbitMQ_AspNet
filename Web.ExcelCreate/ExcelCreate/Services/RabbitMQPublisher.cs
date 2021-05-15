@@ -1,5 +1,4 @@
-﻿
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 using Shared;
 using System;
 using System.Collections.Generic;
