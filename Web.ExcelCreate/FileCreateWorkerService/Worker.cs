@@ -7,12 +7,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using RestSharp;
 using Shared;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -78,27 +80,39 @@ namespace FileCreateWorkerService
             wb.Worksheets.Add(ds);
             wb.SaveAs(ms);
 
-            MultipartFormDataContent multipartFormDataContent = new ();
+            //MultipartFormDataContent multipartFormDataContent = new ();
 
-            multipartFormDataContent.Add(new ByteArrayContent(ms.ToArray()),"file", Guid.NewGuid().ToString() + ".xlsx");
+            //multipartFormDataContent.Add(new ByteArrayContent(ms.ToArray()),"file", Guid.NewGuid().ToString() + ".xlsx");
 
-            var baseUrl = "https://localhost:44369/api/denemes";
-            
-           
+            //var baseUrl = "https://localhost:44369/api/files";
+            var client = new RestClient("https://localhost:44369/api/files/hey?fileId=" + createExcelMessage.FileId);
+            client.Timeout = -1;
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+            client.RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
+            var request = new RestRequest(Method.POST);
+            request.AddFile("file", ms.ToArray(), Guid.NewGuid().ToString() + ".xlsx");
+            IRestResponse res = client.Execute(request);
 
-            using (var httpClient = new HttpClient())
+            if (res.IsSuccessful)
             {
-
-                Console.WriteLine(multipartFormDataContent);
-                var response = await httpClient.PostAsync($"{baseUrl}?fileId={createExcelMessage.FileId}", multipartFormDataContent);
-
-                if (response.IsSuccessStatusCode)
-                {
-
-                    _logger.LogInformation($"File ( Id : {createExcelMessage.FileId}) was created by successful");
-                    _channel.BasicAck(@event.DeliveryTag, false);
-                }
+                _logger.LogInformation($"File ( Id : {createExcelMessage.FileId}) was created by successful");
+                _channel.BasicAck(@event.DeliveryTag, false);
             }
+
+
+            //using (var httpClient = new HttpClient())
+            //{
+
+            //    Console.WriteLine(multipartFormDataContent);
+            //    var response = await httpClient.PostAsync($"{baseUrl}?fileId={createExcelMessage.FileId}", multipartFormDataContent);
+
+            //    if (response.IsSuccessStatusCode)
+            //    {
+
+            //        _logger.LogInformation($"File ( Id : {createExcelMessage.FileId}) was created by successful");
+            //        _channel.BasicAck(@event.DeliveryTag, false);
+            //    }
+            //}
 
         }
 

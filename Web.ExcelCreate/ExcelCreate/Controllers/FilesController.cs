@@ -20,7 +20,7 @@ namespace ExcelCreate.Controllers
         {
             _context = context;
         }
-        [HttpPost("yo")]
+        [HttpPost("hey")]
         public async Task<IActionResult> Upload(IFormFile file ,int fileId)
         {
             if (file is not { Length: > 0 }) return BadRequest();

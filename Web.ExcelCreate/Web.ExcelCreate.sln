@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCreate", "ExcelCreate\ExcelCreate.csproj", "{AAAAB06E-C4EB-419B-B540-B45CFDA19C2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelCreate", "ExcelCreate\ExcelCreate.csproj", "{AAAAB06E-C4EB-419B-B540-B45CFDA19C2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{EE1431F5-6C86-432C-ADAA-B05F7E5AD21B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{EE1431F5-6C86-432C-ADAA-B05F7E5AD21B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileCreateWorkerService", "FileCreateWorkerService\FileCreateWorkerService.csproj", "{898308DB-343D-40A0-AA50-8A5C59A6D46B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileCreateWorkerService", "FileCreateWorkerService\FileCreateWorkerService.csproj", "{898308DB-343D-40A0-AA50-8A5C59A6D46B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
