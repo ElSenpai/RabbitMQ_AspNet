@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 
 namespace RabbitMQ.publisher
 {
@@ -47,7 +48,7 @@ namespace RabbitMQ.publisher
                 LogNames log = (LogNames)new Random().Next(1,5);
 
                 string message = $"log-type: {log} ";
-
+               // var bodyString = JsonSerializer.Serialize(message);
                 var messagebody = Encoding.UTF8.GetBytes(message);
 
                 var routeKey = $"route-{log}";

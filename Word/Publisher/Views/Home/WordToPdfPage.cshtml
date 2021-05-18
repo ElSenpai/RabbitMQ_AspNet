@@ -1,0 +1,26 @@
+﻿@model Word
+@{
+    ViewData["Title"] = "WordToPdfPage";
+}
+
+<h1>WordToPdfPage</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="WordToPdfPage" method="post" enctype="multipart/form-data">
+
+
+            <div class="form-group">
+                <label asp-for="WordFile" ></label>
+                <input asp-for="WordFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" ></label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Dönüştür" class="btn btn-danger" />
+            </div>
+        </form>
+    </div>
+</div>

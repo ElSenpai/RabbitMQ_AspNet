@@ -1,6 +1,8 @@
-﻿using ExcelCreate.Models;
+﻿using ExcelCreate.Hubs;
+using ExcelCreate.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,9 +18,12 @@ namespace ExcelCreate.Controllers
     {
         private readonly AppDbContext _context;
 
-        public FilesController(AppDbContext context)
+        private readonly IHubContext<MyHub> _hubcontext;
+
+        public FilesController(AppDbContext context, IHubContext<MyHub> hubcontext)
         {
             _context = context;
+            _hubcontext = hubcontext;
         }
         [HttpPost("hey")]
         public async Task<IActionResult> Upload(IFormFile file ,int fileId)
@@ -41,6 +46,8 @@ namespace ExcelCreate.Controllers
 
             await _context.SaveChangesAsync();
             //signaIR notification
+            await _hubcontext.Clients.User(userFile.UserId).SendAsync("complatedFile");
+
 
             return Ok();
 
